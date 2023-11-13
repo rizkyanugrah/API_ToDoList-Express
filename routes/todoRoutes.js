@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const todoController = require("../controllers/todoController");
+const authMiddleware = require("../middlewares/authMiddleware");
+
+router.use(authMiddleware.authenticate); // Middleware untuk autentikasi
 
 router.post("/", todoController.createTodo);
 router.get("/", todoController.getAllTodos);
