@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "freedb_rizky",
+    "password": "uYbxW$tD4ps7Y96",
+    "database": "freedb_todoList",
+    "host": "sql.freedb.tech",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "freedb_rizky",
+    "password": "uYbxW$tD4ps7Y96",
+    "database": "freedb_todoList",
+    "host": "sql.freedb.tech",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "freedb_rizky",
+    "password": "uYbxW$tD4ps7Y96",
+    "database": "freedb_todoList",
+    "host": "sql.freedb.tech",
+    "dialect": "mysql"
+  }
+}
