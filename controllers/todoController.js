@@ -5,6 +5,13 @@ const createTodo = async (req, res) => {
   try {
     const { title, description } = req.body;
 
+    // Validasi title dan description harus ada
+    if (!title || !description) {
+      return res
+        .status(400)
+        .json({ error: "Title and description are required" });
+    }
+
     // Membuat Todo Baru
     const newTodo = await Todo.create({
       title,
@@ -65,18 +72,28 @@ const updateTodo = async (req, res) => {
     const todoId = req.params.id;
     const { title, description } = req.body;
 
-    // Update Todo Berdasarkan id
-    const [updatedRows] = await Todo.update(
-      { title, description },
-      { where: { id: todoId, userId: req.user.id } }
-    );
-
-    // Check
-    if (updatedRows === 0) {
-      return res.status(404).json({ error: "Todo not found" });
+    // Validasi input pengguna
+    if (!title || !description) {
+      return res
+        .status(400)
+        .json({ error: "Title and description are required" });
     }
 
-    // Respond with a success message
+    // Pastikan Todo dengan ID tertentu milik pengguna yang sedang masuk
+    const existingTodo = await Todo.findOne({
+      where: { id: todoId, userId: req.user.id },
+    });
+
+    if (!existingTodo) {
+      return res.status(404).json({
+        error: "Todo not found or you don't have permission to update it",
+      });
+    }
+
+    // Lakukan pembaruan
+    await Todo.update({ title, description }, { where: { id: todoId } });
+
+    // Respond dengan pesan keberhasilan
     res.status(200).json({ message: "Todo updated successfully" });
   } catch (error) {
     console.error(error);

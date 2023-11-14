@@ -8,6 +8,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
+app.get("/", (req, res) => {
+  res.json({ message: "Selamat Datang!" });
+});
 app.use("/users", userRoutes);
 app.use("/todos", todoRoutes);
 
